@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SingleTodo from './SingleTodo';
 
 const ComplexTodo = () => {
@@ -6,20 +6,27 @@ const ComplexTodo = () => {
         name:'',age:'',grade:'',email:'',admdate:''
     });
 
+    const [deleted,setDeleted]=useState(false)
+
     const [dataList, setDataList] = useState([]);
 
     const {name,age,grade,email,admdate} = data;
+    
+    //console.log('deleted')
 
-    // const removeTodo = (id) => {
-        // let newTodos = data.filter((items)=>{
-        //     return items.id !== id;
-        // })
-        // setData(newTodos)
+    useEffect(()=>{
+
+          setTimeout(()=>{
+          setDeleted(false)
+      },3000)
+  },[deleted])
 
         const removeItem = (index) => {
           // Create a new array without the item at the specified index
           const updatedList = [...dataList.slice(0, index), ...dataList.slice(index + 1)];
           setDataList(updatedList);
+          setDeleted(true)
+          console.log(deleted)
         };
     
 
@@ -41,6 +48,8 @@ const ComplexTodo = () => {
     
   return (
     <>
+   
+                
      <div className="container col-lg-5 mx-auto shadow p-4" style={{
       background:'#E6E6E3'
      }}>
@@ -64,16 +73,10 @@ const ComplexTodo = () => {
                 </button>
             </form>
         </div>
-        {/* <div>
-        <h2>Data List</h2>
-        <ul>
-          {dataList.map((data, index) => (
-            <li key={index}>
-              Name: {data.name}, Age: {data.age}, Class: {data.grade}
-            </li>
-          ))}
-        </ul>
-      </div> */}
+        { 
+        deleted &&  <h3 className='text-danger'>Student Deleted successfully!</h3>
+      }
+       
 
       <div className=" col-lg-12 row ">
             {dataList.map((data, index)=>{
